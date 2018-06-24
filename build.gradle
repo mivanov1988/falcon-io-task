@@ -8,6 +8,7 @@ buildscript {
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
 		classpath('gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.19.2')
+		classpath("com.commercehub.gradle.plugin:gradle-avro-plugin:0.9.1")
 	}
 }
 
@@ -19,6 +20,8 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'com.palantir.docker'
+apply plugin: 'com.commercehub.gradle.plugin.avro'
 
 group = 'io.falcon'
 version = '0.0.1-SNAPSHOT'
@@ -26,12 +29,19 @@ sourceCompatibility = 1.8
 
 repositories {
 	mavenCentral()
+	maven {
+		url "http://packages.confluent.io/maven/"
+	}
 }
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile('org.springframework.kafka:spring-kafka')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+	compile('org.apache.avro:avro:1.8.2')
+	compile('io.confluent:kafka-avro-serializer:3.3.1') {
+		exclude group: "org.slf4j", module: "slf4j-log4j12"
+	}
 }
 
 docker {
