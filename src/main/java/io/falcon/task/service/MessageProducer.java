@@ -3,7 +3,7 @@ package io.falcon.task.service;
 import io.falcon.schema.MessageDTO;
 import io.falcon.task.kafka.KafkaConfig;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 /**
  * <p>
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * @since 0.0.1
  * 24/06/18
  */
-@Service
+@Component
 public class MessageProducer {
     private KafkaTemplate<Long, MessageDTO> kafkaTemplate;
     private KafkaConfig kafkaConfig;
