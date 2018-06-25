@@ -1,0 +1,13 @@
+{
+  "type": "record",
+  "name": "MessageDTO",
+  "namespace": "io.falcon.schema",
+  "doc": "Data transfer object",
+  "fields": [
+    {
+      "name": "content",
+      "doc": "The content of the message",
+      "type": "string"
+    }
+  ]
+}
