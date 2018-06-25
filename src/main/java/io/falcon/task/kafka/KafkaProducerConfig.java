@@ -2,7 +2,7 @@ package io.falcon.task.kafka;
 
 import io.confluent.kafka.serializers.KafkaAvroSerializer;
 import io.confluent.kafka.serializers.KafkaAvroSerializerConfig;
-import io.falcon.schema.MessageDTO;
+import io.falcon.schema.MessageAvroDTO;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.LongSerializer;
 import org.springframework.context.annotation.Bean;
@@ -32,7 +32,7 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public ProducerFactory<Long, MessageDTO> producerFactory() {
+    public ProducerFactory<Long, MessageAvroDTO> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaConfig.getBootstrapServers());
         configProps.put(ProducerConfig.CLIENT_ID_CONFIG, PRODUCER_NAME);
@@ -47,7 +47,7 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public KafkaTemplate<Long, MessageDTO> kafkaTemplate() {
+    public KafkaTemplate<Long, MessageAvroDTO> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 }

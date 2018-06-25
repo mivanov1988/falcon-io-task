@@ -1,9 +1,14 @@
 {
   "type": "record",
-  "name": "MessageDTO",
+  "name": "MessageAvroDTO",
   "namespace": "io.falcon.schema",
   "doc": "Data transfer object",
   "fields": [
+    {
+      "name": "title",
+      "doc": "The title of the message",
+      "type": "string"
+    },
     {
       "name": "content",
       "doc": "The content of the message",

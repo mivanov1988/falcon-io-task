@@ -1,7 +1,9 @@
 package io.falcon.task.service;
 
-import io.falcon.schema.MessageDTO;
+import io.falcon.schema.MessageAvroDTO;
 import io.falcon.task.kafka.KafkaConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
@@ -14,10 +16,11 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class MessageProducer {
-    private KafkaTemplate<Long, MessageDTO> kafkaTemplate;
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+    private KafkaTemplate<Long, MessageAvroDTO> kafkaTemplate;
     private KafkaConfig kafkaConfig;
 
-    public MessageProducer(KafkaTemplate<Long, MessageDTO> kafkaTemplate, KafkaConfig kafkaConfig) {
+    public MessageProducer(KafkaTemplate<Long, MessageAvroDTO> kafkaTemplate, KafkaConfig kafkaConfig) {
         this.kafkaTemplate = kafkaTemplate;
         this.kafkaConfig = kafkaConfig;
     }
@@ -27,7 +30,11 @@ public class MessageProducer {
      *
      * @param messageDTO the message to be sent
      */
-    public void sendMessage(MessageDTO messageDTO) {
-        kafkaTemplate.send(kafkaConfig.getTopicMessages(), messageDTO);
+    public void sendMessage(MessageAvroDTO messageDTO) {
+        String topic = kafkaConfig.getTopicMessages();
+        logger.debug("REQUEST SEND MESSAGE | TOPIC [{}] | PAYLOAD {}", topic, messageDTO);
+        kafkaTemplate.send(topic, messageDTO);
+        logger.debug("SUCCESSFULLY SENT MESSAGE | TOPIC [{}] | PAYLOAD {}", topic, messageDTO);
+
     }
 }
