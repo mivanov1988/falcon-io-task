@@ -42,6 +42,7 @@ dependencies {
 	compile('io.confluent:kafka-avro-serializer:3.3.1') {
 		exclude group: "org.slf4j", module: "slf4j-log4j12"
 	}
+	compile ('org.apache.commons:commons-lang3:3.7')
 }
 
 docker {
