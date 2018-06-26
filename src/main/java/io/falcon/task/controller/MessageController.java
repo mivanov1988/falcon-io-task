@@ -1,16 +1,15 @@
 package io.falcon.task.controller;
 
+import io.falcon.task.controller.dto.ListMessageResult;
 import io.falcon.task.controller.dto.SendMessageRequest;
 import io.falcon.task.service.MessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Rest Endpoint for messages
@@ -33,5 +32,10 @@ public class MessageController {
     public void send(@RequestBody @Valid SendMessageRequest request) {
         logger.info("REQUEST SEND MESSAGE | PAYLOAD {}", request);
         messageService.sendMessage(request);
+    }
+
+    @GetMapping
+    public List<ListMessageResult> getMessages() {
+        return messageService.loadMessages();
     }
 }
