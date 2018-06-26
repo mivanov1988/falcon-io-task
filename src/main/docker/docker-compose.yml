@@ -7,10 +7,7 @@ services:
     hostname: falcon-io-task
     ports:
       - "8080:8080"
-    depends_on:
-      - zookeeper
-      - kafka
-      - kafka-schema-registry
+    command: dockerize -wait tcp://kafka:9092 -wait tcp://mysql:3306
 
   zookeeper:
     image: zookeeper
@@ -63,3 +60,15 @@ services:
       PROXY: "true"
     depends_on:
       - kafka-schema-registry
+
+  db:
+    image: mysql
+    hostname: mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: taskdb
+      MYSQL_USER: taskuser
+      MYSQL_PASSWORD: taskpass

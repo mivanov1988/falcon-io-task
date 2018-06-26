@@ -8,6 +8,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 /**
+ * Contains methods for sending of messages to the Kafka topic
  * <p>
  *
  * @author Miroslav Ivanov
