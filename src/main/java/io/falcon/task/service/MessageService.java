@@ -32,7 +32,7 @@ public class MessageService {
      */
     public void sendMessage(SendMessageRequest request) {
         MessageAvroDTO meesage = converToMessageAvroDTO(request);
-        webSocketService.sendMessage(meesage);
+        webSocketService.sendMessage(request);
         messageProducer.sendMessage(meesage);
     }
 
