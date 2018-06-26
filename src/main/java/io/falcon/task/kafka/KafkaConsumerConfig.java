@@ -16,7 +16,7 @@ import java.util.Map;
 
 @Configuration
 public class KafkaConsumerConfig {
-    private static final String CONSUMER_GROUP_ID = "AvroConsumer";
+    private static final String CLIENT_ID = "AvroConsumer";
 
     private KafkaConfig kafkaConfig;
 
@@ -28,7 +28,7 @@ public class KafkaConsumerConfig {
     public ConsumerFactory<Long, MessageAvroDTO> consumerFactory() {
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaConfig.getBootstrapServers());
-        //props.put(ConsumerConfig.GROUP_ID_CONFIG, CONSUMER_GROUP_ID);
+        props.put(ConsumerConfig.CLIENT_ID_CONFIG, CLIENT_ID);
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, LongDeserializer.class.getName());
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, KafkaAvroDeserializer.class.getName());
 

@@ -24,7 +24,7 @@ import java.util.Map;
  */
 @Configuration
 public class KafkaProducerConfig {
-    private static final String PRODUCER_NAME = "AvroProducer";
+    private static final String CLIENT_ID = "AvroProducer";
     private KafkaConfig kafkaConfig;
 
     public KafkaProducerConfig(KafkaConfig kafkaConfig) {
@@ -35,7 +35,7 @@ public class KafkaProducerConfig {
     public ProducerFactory<Long, MessageAvroDTO> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaConfig.getBootstrapServers());
-        configProps.put(ProducerConfig.CLIENT_ID_CONFIG, PRODUCER_NAME);
+        configProps.put(ProducerConfig.CLIENT_ID_CONFIG, CLIENT_ID);
 
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, LongSerializer.class.getName());
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, KafkaAvroSerializer.class.getName());

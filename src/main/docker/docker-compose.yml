@@ -7,6 +7,11 @@ services:
     hostname: falcon-io-task
     ports:
       - "8080:8080"
+    depends_on:
+      - zookeeper
+      - kafka
+      - kafka-schema-registry
+      - db
     command: dockerize -wait tcp://kafka:9092 -wait tcp://mysql:3306
 
   zookeeper:
