@@ -1,6 +1,8 @@
 package io.falcon.task.persistence.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
 
 /**

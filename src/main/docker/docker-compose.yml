@@ -12,6 +12,7 @@ services:
       - kafka
       - kafka-schema-registry
       - db
+      - rabbitmq
     command: dockerize -wait tcp://kafka:9092 -wait tcp://mysql:3306
 
   zookeeper:
@@ -77,3 +78,12 @@ services:
       MYSQL_DATABASE: taskdb
       MYSQL_USER: taskuser
       MYSQL_PASSWORD: taskpass
+
+  rabbitmq:
+    #image: "rabbitmq:3-management"
+    image: resilva87/docker-rabbitmq-stomp
+    hostname: "rabbitmq"
+    ports:
+      - 61613:61613
+      - 15674:15674
+      - 15672:15672

@@ -18,18 +18,21 @@ import org.springframework.stereotype.Service;
 public class MessageService {
     private MessageProducer messageProducer;
     private MessageRepository messageRepository;
+    private WebSocketService webSocketService;
 
-    public MessageService(MessageProducer messageProducer, MessageRepository messageRepository) {
+    public MessageService(MessageProducer messageProducer, MessageRepository messageRepository, WebSocketService webSocketService) {
         this.messageProducer = messageProducer;
         this.messageRepository = messageRepository;
+        this.webSocketService = webSocketService;
     }
 
     /**
-     * Sends message to the Kafka topic
-     * @param request the message to be sent to the kafka topic
+     * Sends message to the Kafka topic and Web Socket
+     * @param request the message to be sent
      */
     public void sendMessage(SendMessageRequest request) {
         MessageAvroDTO meesage = converToMessageAvroDTO(request);
+        webSocketService.sendMessage(meesage);
         messageProducer.sendMessage(meesage);
     }
 
