@@ -1,15 +1,22 @@
 package io.falcon.task.service;
 
 import io.falcon.schema.MessageAvroDTO;
+import io.falcon.task.controller.dto.ListMessageResult;
 import io.falcon.task.controller.dto.SendMessageRequest;
 import io.falcon.task.persistence.dao.MessageRepository;
 import io.falcon.task.persistence.entity.Message;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Service class for managing of messages
  * (sends to the queue, persists to the database and etc.)
  * <p>
+ *
  * @author Miroslav Ivanov
  * @since 0.0.1
  * 25/07/18
@@ -28,6 +35,7 @@ public class MessageService {
 
     /**
      * Sends message to the Kafka topic and Web Socket
+     *
      * @param request the message to be sent
      */
     public void sendMessage(SendMessageRequest request) {
@@ -38,11 +46,21 @@ public class MessageService {
 
     /**
      * Saves message to the database
+     *
      * @param messageDTO the message to be saved
      */
     public void saveMessage(MessageAvroDTO messageDTO) {
         Message messageEntity = convertToMessageEntity(messageDTO);
         messageRepository.save(messageEntity);
+    }
+
+    /**
+     * Returns all messages from the database
+     * @return all messages from the database
+     */
+    public List<ListMessageResult> loadMessages() {
+        List<Message> messages = messageRepository.findAll();
+        return convertToListMessageResult(messages);
     }
 
     private MessageAvroDTO converToMessageAvroDTO(SendMessageRequest request) {
@@ -62,5 +80,30 @@ public class MessageService {
         messageEntity.setContent(content);
 
         return messageEntity;
+    }
+
+    private List<ListMessageResult> convertToListMessageResult(List<Message> messages) {
+        if (CollectionUtils.isEmpty(messages)) {
+            return Collections.emptyList();
+        }
+
+        List<ListMessageResult> results = messages.stream()
+                .map(message -> {
+                    ListMessageResult result = new ListMessageResult();
+
+                    Long id = message.getId();
+                    result.setId(id);
+
+                    String title = message.getTitle();
+                    result.setTitle(title);
+
+                    String content = message.getContent();
+                    result.setContent(content);
+
+                    return result;
+                })
+                .collect(Collectors.toList());
+
+        return results;
     }
 }
