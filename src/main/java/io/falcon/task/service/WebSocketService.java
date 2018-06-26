@@ -1,7 +1,7 @@
 package io.falcon.task.service;
 
-import io.falcon.schema.MessageAvroDTO;
 import io.falcon.task.config.WebSocketConfig;
+import io.falcon.task.controller.dto.SendMessageRequest;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +26,7 @@ public class WebSocketService {
      * Sends the message to the Web Socket
      * @param message the message to be sent
      */
-    public void sendMessage(MessageAvroDTO message) {
+    public void sendMessage(SendMessageRequest message) {
         messagingTemplate.convertAndSend(webSocketConfig.getTopicMessages(), message);
     }
 }
