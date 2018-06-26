@@ -21,4 +21,6 @@
 
 # Gradle
 .gradle
+!gradle/wrapper/gradle-wrapper.jar
 /build
+/out
