@@ -5,6 +5,7 @@ import io.falcon.task.controller.dto.SendMessageRequest;
 import io.falcon.task.service.MessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +30,7 @@ public class MessageController {
     }
 
     @RequestMapping(value = "/send", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(code = HttpStatus.CREATED)
     public void send(@RequestBody @Valid SendMessageRequest request) {
         logger.info("REQUEST SEND MESSAGE | PAYLOAD {}", request);
         messageService.sendMessage(request);

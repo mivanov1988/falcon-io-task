@@ -32,6 +32,22 @@ function disconnect() {
     console.log("Disconnected");
 }
 
+function sendMessage() {
+    var message = JSON.stringify(
+        {
+            title: $('#title').val(),
+            content: $('#content').val()
+        }
+    );
+    $.ajax({
+        url: "/api/v1/messages/send",
+        type: "POST",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        data: message
+    });
+}
+
 function showMessage(message) {
     $("#messages").append("<tr><td>" + message.title + "</td><td>" + message.content + "</td></tr>");
 }
@@ -40,8 +56,14 @@ $(function () {
     $("form").on('submit', function (e) {
         e.preventDefault();
     });
-    $( "#connect" ).click(function() { connect(); });
-    $( "#disconnect" ).click(function() { disconnect(); });
-    $( "#send" ).click(function() { sendName(); });
+    $("#connect").click(function () {
+        connect();
+    });
+    $("#disconnect").click(function () {
+        disconnect();
+    });
+    $("#send").click(function () {
+        sendMessage();
+    });
 });
 
