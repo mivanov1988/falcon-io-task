@@ -39,9 +39,9 @@ public class MessageService {
      * @param request the message to be sent
      */
     public void sendMessage(SendMessageRequest request) {
-        MessageAvroDTO meesage = converToMessageAvroDTO(request);
+        MessageAvroDTO message = converToMessageAvroDTO(request);
         webSocketService.sendMessage(request);
-        messageProducer.sendMessage(meesage);
+        messageProducer.sendMessage(message);
     }
 
     /**
@@ -87,7 +87,7 @@ public class MessageService {
             return Collections.emptyList();
         }
 
-        List<ListMessageResult> results = messages.stream()
+        return messages.stream()
                 .map(message -> {
                     ListMessageResult result = new ListMessageResult();
 
@@ -103,7 +103,5 @@ public class MessageService {
                     return result;
                 })
                 .collect(Collectors.toList());
-
-        return results;
     }
 }
