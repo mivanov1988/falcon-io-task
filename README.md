@@ -4,6 +4,9 @@ The project represents a messaging app, which sends messages to all open apps th
 
 ## Getting Started
 
+### High-Level Diagram
+![alt text](https://github.com/mivanov1988/falcon-io-task/blob/develop/doc/high_level_diagram.png)
+
 ### Prerequisites
 
 ```
